@@ -1,0 +1,76 @@
+/* 
+    Document   : main
+    Created on : 8 janv. 2010, 17:01:40
+    Author     : David Chabrier
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* DEBUT RESET CSS */
+html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, font, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td {margin: 0;padding: 0;border: 0;outline: 0;font-size: 100%;vertical-align: baseline;background: transparent;}
+body {line-height: 1;}ol, ul {list-style: none;}blockquote, q {quotes: none;}blockquote:before, blockquote:after,q:before, q:after {content: '';content: none;}
+/* remember to define focus styles! */:focus {outline: 0;}
+/* remember to highlight inserts somehow! */ins {text-decoration: none;}del {text-decoration: line-through;}
+/* tables still need 'cellspacing="0"' in the markup */table {border-collapse: collapse;border-spacing: 0;}
+/* FIN RESET CSS */
+
+header, section, article, nav, footer, aside, hgroup {display:block;}    
+body {font-family:Verdana, Geneva, Arial, sans-serif; font-size: 1em; color: #003366; width: 100%; height: 100%;}
+    
+@media screen and (max-width: 1200px) {    
+    body {font-family:Verdana, Geneva, Arial, sans-serif; font-size: 25px; color: #003366; width: 100%; height: 100%;}
+    #bodyDiv { display:block; width:100%; margin:0 auto; text-align: center;box-shadow: 0 0 20px #000;}
+    form #slider,form #comment {margin-left: 25%;margin-right: 25%;width: 50%}
+}
+
+@media screen and (max-width: 800px) {    
+    body {font-family:Verdana, Geneva, Arial, sans-serif; font-size: 25px; color: #003366; width: 100%; height: 100%;}
+    #bodyDiv { display:block; width:100%; margin:0 auto; text-align: center;box-shadow: 0 0 20px #000;}
+    form #slider,form #comment {margin-left: 25%;margin-right: 25%;width: 50%}
+}
+
+@media screen and (min-width: 1200px) {    
+    body {font-family:Verdana, Geneva, Arial, sans-serif; font-size: 20px; color: #003366; width: 100%; height: 100%;}
+    #bodyDiv { display:block; width:100%; max-width: 1620px; margin:0 auto; text-align: center;box-shadow: 0 0 20px #000;}
+    form #slider,form #comment {margin-left: 25%;margin-right: 25%;width: 50%}
+}
+
+a {text-decoration: none; color:#0033cc;}
+a img {border:none; cursor: pointer}
+hr {color: #ffffff; background-color: #0099ff; border: 0; height: 2px;}
+input, textarea {font-family:Verdana, Geneva, Arial, sans-serif; font-size: 1.25em; font-weight: bold; color: #0033cc;}
+
+#accordeon {display: inline-block; width:100%;}
+#bodyCenterDiv { display:block; padding: 10px; font-family:Verdana, Geneva, sans-serif; background:#ffffff; border: 2px solid #abcafe; -moz-border-radius: 5px; -webkit-border-radius: 5px;}
+#digicode {display:inline-block;border: 1px solid #A5A8B8;}
+#divSearch {position: absolute; top:0px; left: 0px; padding-left: 10px;}
+#footerDiv {display: block; height: 10%;}
+#headerNav {display:block; height: 5%;}
+#loginMenuNav {display:inline-block; background: #ffffff; color:#0033cc; overflow: hidden; /*width:30%;*/ padding-left: 10px; text-align: right; z-index: 10;}
+#logoNav {text-align: left; top: 0px}
+#logoNav a {text-decoration: none;}
+#menuNav, nav{ width:80%; margin:0 auto; text-align: center;}
+#menuUl li {display: inline-block; display:inline;}
+
+
+._hrW {color:#ffffff; background-color: #ffffff;border:0;}
+.blue{color :#0033cc;}
+.blueC{color :#0099ff;}
+.blueF{color :#000099;}
+.red{color :#ff0000;}
+.komunoteTitle{font-size: 2em;}
+
+.btSquareB {width: 32px;height: 32px;vertical-align: middle;}
+.btSquareS {width: 16px;height: 16px;vertical-align: middle;}
+.formular .calcul {border: 1px solid #AAA; padding-bottom: 5px; padding-top: 5px; padding-left: 10px; padding-right: 10px; text-decoration: none; cursor: pointer;}
+.hidden {display: none;}
+.menuNotSelected, a:visited {position: relative; text-decoration: none;}
+.pointer {cursor: pointer;}
+/* alignements de textes */
+.ta-r {text-align: right;}
+.ta-l {text-align: left;}
+.ta-c {text-align: center;}
+.pointer{cursor: pointer;}
+.cB{clear: both}
+.fR{float:right}
+.fL{float:left}

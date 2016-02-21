@@ -1,0 +1,237 @@
+#liens symboliques
+Options +FollowSymLinks
+
+# protection de la lecture des r�pertoires
+Options -Indexes
+
+#optimisations 
+SetEnv REGISTER_GLOBALS 0
+SetEnv ZEND_OPTIMIZER 1
+SetEnv MAGIC_QUOTES 0
+SetEnv PHP_VER 5
+
+#RewriteEngine On 
+#RewriteCond %{HTTP_USER_AGENT} "ipod|iphone|ipad" [NC,OR]  	# NC = "No Case"
+#RewriteCond %{HTTP_USER_AGENT} "android|palm"
+#RewriteRule (.*) http://m.votredomaine.com [R=301,L]
+
+SetEnv DB_PASS "bAWcrux4MnKDAjVh"
+
+#php_value disable_functions phpinfo
+
+#compression
+<IfModule mod_deflate.c>	
+	#AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/x-javascript application/x-httpd-php text/x-javascript text/javascript
+	#DeflateCompressionLevel 1	
+	#DeflateMemLevel 9
+	#DeflateWindowSize 14
+	
+	AddOutputFilterByType DEFLATE text/plain
+	AddOutputFilterByType DEFLATE text/xml
+	AddOutputFilterByType DEFLATE text/html
+	AddOutputFilterByType DEFLATE text/css
+	AddOutputFilterByType DEFLATE image/svg+xml
+	AddOutputFilterByType DEFLATE application/xhtml+xml
+	AddOutputFilterByType DEFLATE application/xml
+	AddOutputFilterByType DEFLATE application/rss+xml
+	AddOutputFilterByType DEFLATE application/atom_xml
+	AddOutputFilterByType DEFLATE application/x-javascript
+	AddOutputFilterByType DEFLATE application/x-httpd-php
+	AddOutputFilterByType DEFLATE application/x-httpd-fastphp
+	AddOutputFilterByType DEFLATE application/x-httpd-eruby
+	
+	SetOutputFilter DEFLATE
+
+	SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
+	SetEnvIfNoCase Request_URI \.(?:exe|t?gz|zip|bz2|sit|rar)$ no-gzip dont-vary
+	SetEnvIfNoCase Request_URI \.(?:pdf|avi|mov|mp3|mp4|rm)$ no-gzip dont-vary
+
+	BrowserMatch ^Mozilla/4 gzip-only-text/html
+	BrowserMatch ^Mozilla/4\.0[678] no-gzip
+	BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+
+	# Pour les proxies
+	Header append Vary User-Agent env=!dont-vary	
+</IfModule>
+
+# protect wpconfig.php
+<files wp-config.php>
+order allow,deny
+deny from all
+</files>
+
+# protect the htaccess file
+<files .htaccess>
+	order allow,deny
+	deny from all
+</files>
+
+# KILL THEM ETAGS
+<IfModule mod_headers.c>
+	Header unset ETag
+	FileETag None
+</IfModule>
+
+#expiration des pages
+<IfModule mod_expires.c>	
+	ExpiresActive On
+	ExpiresDefault "access plus 7200 seconds"
+	ExpiresByType text/html "access plus 7200 seconds"
+	ExpiresByType text/javascript "access plus 10 years"
+	ExpiresByType text/css "access plus 10 years"
+	ExpiresByType application/javascript A259200
+	ExpiresByType application/x-javascript "access plus 2592000 seconds"	
+	ExpiresByType image/ico "access plus 10 years"	
+	ExpiresByType image/x-icon "access plus 10 years"
+	ExpiresByType image/jpg "access plus 10 years"
+	ExpiresByType image/jpeg "access plus 10 years"
+	ExpiresByType image/png "access plus 10 years"
+	ExpiresByType image/gif "access plus 10 years"
+</IfModule>
+
+# BEGIN Cache-Control Headers
+<IfModule mod_headers.c>
+	<FilesMatch "\\.(ico|jpe?g|png|gif|swf|css|gz)$">
+		Header set Cache-Control "max-age=2592000, public"
+	</FilesMatch>
+	<FilesMatch "\\.(js)$">
+		Header set Cache-Control "max-age=2592000, private"
+	</FilesMatch>
+	<filesMatch "\\.(html|htm)$">
+		Header set Cache-Control "max-age=7200, public"
+	</filesMatch>
+	# Disable caching for scripts and other dynamic files
+	<FilesMatch "\.(pl|php|cgi|spl|scgi|fcgi)$">
+		Header unset Cache-Control
+	</FilesMatch>
+</IfModule>
+# END Cache-Control Headers
+
+RewriteEngine On
+RewriteBase /
+
+# interdire les liens directs des autres sites
+#RewriteCond %{HTTP_REFERER} !^$
+#RewriteCond %{HTTP_REFERER} !^http://www.komunote.com/.*$ [NC]
+#ReWriteRule .*\.(gif|png|jpe?g)$ - [F]
+
+RewriteRule ^Accueil$ /komunote/index.php?language=FR [L]
+RewriteRule ^Home$ /komunote/index.php?language=EN [L]
+RewriteRule ^Home-page$ /komunote/index.php?language=JP [L]
+
+RewriteRule ^Francais$ /komunote/index.php?language=FR [L]
+RewriteRule ^English$ /komunote/index.php?language=EN [L]
+RewriteRule ^Nihongo$ /komunote/index.php?language=JP [L]
+
+RewriteRule ^Inscription$ /komunote/index.php?c=admin&a=Signin&nocache=1&language=FR [L]
+RewriteRule ^Sign-in$ /komunote/index.php?c=admin&a=Signin&nocache=1&language=EN [L]
+RewriteRule ^Tooroku$ /komunote/index.php?c=admin&a=Signin&nocache=1&language=JP [L]
+
+RewriteRule ^Bienvenue$ /komunote/index.php?c=index&a=LogIn&nocache=1&language=FR [L]
+RewriteRule ^Log-in$ /komunote/index.php?c=index&a=LogIn&nocache=1&language=EN [L]
+RewriteRule ^Yokoso$ /komunote/index.php?c=index&a=LogIn&nocache=1&language=JP [L]
+
+RewriteRule ^Bienvenue-Android$ /komunote/android.php?c=index&a=LogIn&nocache=1&language=FR&mobile=1
+
+
+RewriteRule ^Au-revoir$ /komunote/index.php?c=index&a=LogOut&nocache=1&language=FR [L]
+RewriteRule ^Log-out$ /komunote/index.php?c=index&a=LogOut&nocache=1&language=EN [L]
+RewriteRule ^Sayounara$ /komunote/index.php?c=index&a=LogOut&nocache=1&language=JP [L]
+
+RewriteRule ^Inscription-envoyee$ /komunote/index.php?c=admin&a=SigninResult&nocache=1&language=FR [L]
+RewriteRule ^Sign-in-sent$ /komunote/index.php?c=admin&a=SigninResult&nocache=1&language=EN [L]
+RewriteRule ^Tooroku-soushin$ /komunote/index.php?c=admin&a=SigninResult&nocache=1&language=JP [L]
+
+RewriteRule ^Search$ /komunote/index.php?c=shop&a=Search&language=EN [L]
+RewriteRule ^Rechercher$ /komunote/index.php?c=shop&a=Search&language=FR [L]
+RewriteRule ^Sagasu$ /komunote/index.php?c=shop&a=Search&language=JP [L]
+
+RewriteRule ^Recherche?([a-z0-9]+)$ /komunote/index.php?c=shop&a=SearchItem&$1&language=FR [QSA,L]
+RewriteRule ^Search-result?([a-z0-9]+)$ /komunote/index.php?c=shop&a=SearchItem&$1&language=EN [QSA,L]
+RewriteRule ^Kensakukekka?([a-z0-9]+)$ /komunote/index.php?c=shop&a=SearchItem&$1&language=JP [QSA,L]
+
+RewriteRule ^Mon-compte$ /komunote/index.php?c=admin&a=Account&nocache=1&nocache=1&language=FR [L]
+RewriteRule ^User-account$ /komunote/index.php?c=admin&a=Account&nocache=1&nocache=1&language=EN [L]
+RewriteRule ^User-account-jp$ /komunote/index.php?c=admin&a=Account&nocache=1&nocache=1&language=JP [L]
+
+RewriteRule ^Boutique-Mise-en-ligne-succes$ /komunote/index.php?c=shop&a=SellSuccess&nocache=1&language=FR [L]
+RewriteRule ^Shop-Sell-Success$ /komunote/index.php?c=shop&a=SellSuccess&nocache=1&language=EN [L]
+RewriteRule ^Shop-Sell-Success-jp$ /komunote/index.php?c=shop&a=SellSuccess&nocache=1&language=JP [L]
+
+RewriteRule ^Acheter-Confirmation/([0-9]+)$ /komunote/index.php?c=shop&a=BuySelectedItem&itemId=$1&nocache=1&language=FR [L]
+RewriteRule ^Buy-Confirm/([0-9]+)$ /komunote/index.php?c=shop&a=BuySelectedItem&itemId=$1&nocache=1&language=EN [L]
+RewriteRule ^Buy-Confirm-jp/([0-9]+)$ /komunote/index.php?c=shop&a=BuySelectedItem&itemId=$1&nocache=1&language=JP [L]
+
+RewriteRule ^Boutiques$ /komunote/index.php?c=shop&language=FR [L]
+RewriteRule ^Shops$ /komunote/index.php?c=shop&language=EN [L]
+RewriteRule ^Shoppu$ /komunote/index.php?c=shop&language=JP [L]
+
+RewriteRule ^Boutiques/([0-9]+) /komunote/index.php?c=shop&a=Show&itemId=$1&language=FR [L]
+RewriteRule ^Shops/([0-9]+)$ /komunote/index.php?c=shop&a=Show&itemId=$1&language=EN [L]
+RewriteRule ^Shops-jp/([0-9]+)$ /komunote/index.php?c=shop&a=Show&itemId=$1&language=JP [L]
+
+RewriteRule ^Boutiques-paypal-form /komunote/index.php?c=shop&a=PaypalForm&itemId=$1&nocache=1&language=FR [L]
+RewriteRule ^Shops-paypal-form /komunote/index.php?c=shop&a=PaypalForm&itemId=$1&nocache=1&language=EN [L]
+RewriteRule ^Shops-paypal-form-jp /komunote/index.php?c=shop&a=PaypalForm&itemId=$1&nocache=1&language=JP [L]
+
+RewriteRule ^Sell$ /komunote/index.php?c=shop&a=Sell&nocache=1&language=EN [L]
+RewriteRule ^Vendre$ /komunote/index.php?c=shop&a=Sell&nocache=1&language=FR [L]
+RewriteRule ^Uru$ /komunote/index.php?c=shop&a=Sell&nocache=1&language=JP [L]
+
+RewriteRule ^Paiement-paypal-annule/([0-9]+)/([a-z0-9]{64})$ /komunote/index.php?c=shop&a=PaymentPaypalCancelled&id=$1&key=$2&nocache=1&language=FR [QSA,L]
+RewriteRule ^Payment-paypal-cancelled/([0-9]+)/([a-z0-9]{64})$ /komunote/index.php?c=shop&a=PaymentPaypalCancelled&id=$1&key=$2&nocache=1&language=EN [QSA,L]
+RewriteRule ^Payment-paypal-cancelled-jp/([0-9]+)/([a-z0-9]{64})$ /komunote/index.php?c=shop&a=PaymentPaypalCancelled&id=$1&key=$2&nocache=1&language=JP [QSA,L]
+
+RewriteRule ^Paiement-annule/([0-9]+)/([0-9]+)$ /komunote/index.php?c=shop&a=PaymentCancelled&idOrder=$1&idUser=$2&nocache=1&language=FR [QSA,L]
+RewriteRule ^Payment-cancelled/([0-9]+)/([0-9]+)$ /komunote/index.php?c=shop&a=PaymentCancelled&idOrder=$1&idUser=$2&nocache=1&language=EN [QSA,L]
+RewriteRule ^Payment-cancelled-jp/([0-9]+)/([0-9]+)$ /komunote/index.php?c=shop&a=PaymentCancelled&idOrder=$1&idUser=$2&nocache=1&language=JP [QSA,L]
+
+RewriteRule ^Paiement-annule-vendeur/([0-9]+)/([0-9]+)$ /komunote/index.php?c=shop&a=PaymentCancelledSeller&idOrder=$1&nocache=1&language=FR [QSA,L]
+RewriteRule ^Payment-cancelled-seller/([0-9]+)/([0-9]+)$ /komunote/index.php?c=shop&a=PaymentCancelledSeller&idOrder=$1&nocache=1&language=EN [QSA,L]
+RewriteRule ^Payment-cancelled-seller-jp/([0-9]+)/([0-9]+)$ /komunote/index.php?c=shop&a=PaymentCancelledSeller&idOrder=$1&nocache=1&language=JP [QSA,L]
+
+RewriteRule ^Paiement-paypal-succes/([0-9]+)/([a-z0-9]{64})$ /komunote/index.php?c=shop&a=PaymentSuccess&id=$1&key=$2&nocache=1&language=FR [QSA,L]
+RewriteRule ^Payment-paypal-success/([0-9]+)/([a-z0-9]{64})$ /komunote/index.php?c=shop&a=PaymentSuccess&id=$1&key=$2&nocache=1&language=EN [QSA,L]
+RewriteRule ^Payment-paypal-success-jp/([0-9]+)/([a-z0-9]{64})$ /komunote/index.php?c=shop&a=PaymentSuccess&id=$1&key=$2&nocache=1&language=JP [QSA,L]
+
+RewriteRule ^Paiement-succes-vendeur/([0-9]+)/([0-9]+)$ /komunote/index.php?c=shop&a=PaymentSuccessSeller&id=$1&key=$2&nocache=1&language=FR [QSA,L]
+RewriteRule ^Payment-success-seller/([0-9]+)/([0-9]+)$ /komunote/index.php?c=shop&a=PaymentSuccessSeller&id=$1&key=$2&nocache=1&language=EN [QSA,L]
+RewriteRule ^Payment-success-seller-jp/([0-9]+)/([0-9]+)$ /komunote/index.php?c=shop&a=PaymentSuccessSeller&id=$1&key=$2&nocache=1&language=JP [QSA,L]
+
+RewriteRule ^Vente-supprimer/([0-9]+)/([0-9]+)$ /komunote/index.php?c=shop&a=SellDelete&id=$1&key=$2&nocache=1&language=FR [QSA,L]
+RewriteRule ^Sell-delete/([0-9]+)/([0-9]+)$ /komunote/index.php?c=shop&a=SellDelete&id=$1&key=$2&nocache=1&language=EN [QSA,L]
+RewriteRule ^Sell-delete-jp/([0-9]+)/([0-9]+)$ /komunote/index.php?c=shop&a=SellDelete&id=$1&key=$2&nocache=1&language=JP [QSA,L]
+
+RewriteRule ^Evaluer-vendeur$ /komunote/index.php?c=admin&a=RateSeller&nocache=1&language=FR [L]
+RewriteRule ^Rate-seller$ /komunote/index.php?c=admin&a=RateSeller&nocache=1&language=EN [L]
+RewriteRule ^Rate-seller-jp$ /komunote/index.php?c=admin&a=RateSeller&nocache=1&language=JP [L]
+
+RewriteRule ^Evaluer-acheteur$ /komunote/index.php?c=admin&a=RateBuyer&nocache=1&language=FR [L]
+RewriteRule ^Rate-buyer$ /komunote/index.php?c=admin&a=RateBuyer&nocache=1&language=EN [L]
+RewriteRule ^Rate-buyer-jp$ /komunote/index.php?c=admin&a=RateBuyer&nocache=1&language=JP [L]
+
+RewriteRule ^Evaluer-vendeur-succes$ /komunote/index.php?c=admin&a=RateSellerSuccess&nocache=1&language=FR [L]
+RewriteRule ^Rate-seller-success$ /komunote/index.php?c=admin&a=RateSellerSuccess&nocache=1&language=EN [L]
+RewriteRule ^Rate-seller-success-jp$ /komunote/index.php?c=admin&a=RateSellerSuccess&nocache=1&language=JP [L]
+
+RewriteRule ^Evaluer-acheteur-succes$ /komunote/index.php?c=admin&a=RateBuyerSuccess&nocache=1&language=FR [L]
+RewriteRule ^Rate-buyer-success$ /komunote/index.php?c=admin&a=RateBuyerSuccess&nocache=1&language=EN [L]
+RewriteRule ^Rate-buyer-success-jp$ /komunote/index.php?c=admin&a=RateBuyerSuccess&nocache=1&language=JP [L]
+
+RewriteRule ^Infos-legales$ /komunote/index.php?c=index&a=About&language=FR [L]
+RewriteRule ^Legal-informations$ /komunote/index.php?c=index&a=About&language=EN [L]
+RewriteRule ^Legal-informations-jp$ /komunote/index.php?c=index&a=About&language=JP [L]
+
+RewriteRule ^Concept$ /komunote/index.php?c=index&a=Concept&language=FR [L]
+RewriteRule ^Concept-en$ /komunote/index.php?c=index&a=Concept&language=EN [L]
+RewriteRule ^Gainen$ /komunote/index.php?c=index&a=Concept&language=JP [L]
+
+RewriteRule ^Session-expiree$ /komunote/index.php?c=index&a=Expired&language=FR [L]
+RewriteRule ^Expired-session$ /komunote/index.php?c=index&a=Expired&language=EN [L]
+RewriteRule ^Expired-session-jp$ /komunote/index.php?c=index&a=Expired&language=JP [L]
+
+RewriteRule ^([a-z]+)\-([A-Z]{1})([a-z]+)$ /komunote/index.php?c=$1&a=$2$3 [L]
+RewriteRule ^([a-z]+)\-([a-z]+)$ /komunote/index.php?c=$1&a=$2$3 [L]
+
+RewriteRule ^([0-9a-z]+)$ /komunote/index.php?c=admin&a=Error404 [L]
+ErrorDocument 404 /komunote/index.php?c=admin&a=Error404
